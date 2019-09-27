@@ -121,6 +121,30 @@ impl Board {
 
 		return legal_moves;
 	}
+	
+	fn find_piece(&mut self, name: Name, color:Color) -> Vec<(Rank, File)>{
+		let mut vector: Vec<(Rank, File)> = Vec::new();
+
+		for w in 0.. self.width{
+			for h in 0..self.height{
+				if let Some(piece) = self.board[w][h].piece{
+					if piece.color == color && piece.name == name{
+						vector.push((self.board[w][h].rank, self.board[w][h].file));
+					}
+				}
+			}
+		}
+
+		return vector;
+	}
+
+	fn find_piece_from_piece(&mut self, piece:Piece) -> Vec<(Rank, File)>{
+		return self.find_piece(piece.name, piece.color);
+	}
+
+	fn find_king(&mut self, color:Color) -> Vec<(Rank, File)>{
+		return self.find_piece(Name::King, color);
+	}
 
 	// if the piece chosen piece doesn't have special capture moves,
 	// capture_moves should be set to false
